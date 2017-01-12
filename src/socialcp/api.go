@@ -8,7 +8,7 @@ import (
 )
 
 func httpRequest(method string, endpoint string, jsonBody string) (int, string) {
-	url := "http://socialcp.cloud.dev.globoi.com/api/" + endpoint
+	url := GetHost() + endpoint
 
 	json := []byte(jsonBody)
 
