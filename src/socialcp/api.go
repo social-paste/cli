@@ -37,3 +37,16 @@ func UnregisterUser(email string) (int, string) {
 	body := fmt.Sprintf(`{"email":"%s"}`, email)
 	return httpRequest("DELETE", "accounts/delete/", body)
 }
+
+func Send(origin string, destination string, content string) (int, string) {
+	body := fmt.Sprintf(`{"origin":"%s", "destination":"%s", "content":"%s"}`, origin, destination, content)
+	fmt.Println(body)
+	return httpRequest("POST", "messages/", body)	
+}
+
+// TODO: validar request
+func Recv(origin string, destination string) (int, string) {
+	body := fmt.Sprintf(`{"origin":"%s", "destination":"%s"}`, origin, destination)
+	fmt.Println(body)
+	return httpRequest("GET", "messages/", body)	
+}

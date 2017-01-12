@@ -56,7 +56,8 @@ var commands = []*Command{
 	cmdList,
 	cmdAdd,
 	cmdRemove,
-}
+	cmdSend,
+	cmdRecv}
 
 func main() {
 
