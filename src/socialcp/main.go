@@ -89,7 +89,7 @@ func main() {
 	os.Exit(2)
 }
 
-var usageTemplate = `socialcp is a tool for 
+var usageTemplate = `socialcp is a tool for cliboard sharing.
 
 Usage:
 
