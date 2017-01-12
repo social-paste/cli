@@ -12,28 +12,28 @@ type Configuration struct {
   Slots map[int]string
 }
 
-var filePath = "configuration.json"
+var FilePath = "configuration.json"
 var configuration *Configuration;
 
-func LoadConfiguration() {
-  data, error := ioutil.ReadFile(filePath)
+func loadConfiguration() {
+  data, error := ioutil.ReadFile(FilePath)
 
   if error != nil {
-    InitializeConfiguration()
+    initializeConfiguration()
     return
   }
 
   error = json.Unmarshal(data, &configuration)
 
   if error != nil {
-    InitializeConfiguration()
+    initializeConfiguration()
     return
   }
 }
 
-func SaveConfiguration() {
+func saveConfiguration() {
   if configuration == nil {
-    InitializeConfiguration()
+    initializeConfiguration()
   }
 
   serializedConfiguration, error := json.Marshal(configuration)
@@ -44,10 +44,10 @@ func SaveConfiguration() {
 
   var indentedJSON bytes.Buffer
   json.Indent(&indentedJSON, serializedConfiguration, "", "  ")
-  ioutil.WriteFile(filePath, indentedJSON.Bytes(), 0644)
+  ioutil.WriteFile(FilePath, indentedJSON.Bytes(), 0644)
 }
 
-func InitializeConfiguration() {
+func initializeConfiguration() {
   configuration = new(Configuration)
   configuration.Host = "http://socialcp.cloud.dev.globoi.com/api/"
   configuration.User = ""
@@ -56,15 +56,16 @@ func InitializeConfiguration() {
 
 func SetHost(host string) {
   if configuration == nil {
-    LoadConfiguration()
+    loadConfiguration()
   }
 
   configuration.Host = host
+  saveConfiguration()
 }
 
 func GetHost() (string) {
   if configuration == nil {
-    LoadConfiguration()
+    loadConfiguration()
   }
 
   return configuration.Host
@@ -72,15 +73,16 @@ func GetHost() (string) {
 
 func SetUser(user string) {
   if configuration == nil {
-    LoadConfiguration()
+    loadConfiguration()
   }
 
   configuration.User = user
+  saveConfiguration()
 }
 
 func GetUser() (string) {
   if configuration == nil {
-    LoadConfiguration()
+    loadConfiguration()
   }
 
   return configuration.User
@@ -88,15 +90,16 @@ func GetUser() (string) {
 
 func SetRecipient(slot int, email string) {
   if configuration == nil {
-    LoadConfiguration()
+    loadConfiguration()
   }
 
   configuration.Slots[slot] = email
+  saveConfiguration()
 }
 
 func GetRecipient(slot int) (string) {
   if configuration == nil {
-    LoadConfiguration()
+    loadConfiguration()
   }
 
   return configuration.Slots[slot]
