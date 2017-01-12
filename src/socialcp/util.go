@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
+  "bytes"
 )
 
 type Configuration struct {
@@ -41,7 +42,9 @@ func SaveConfiguration() {
     return
   }
 
-  ioutil.WriteFile(filePath, serializedConfiguration, 0644)
+  var indentedJSON bytes.Buffer
+  json.Indent(&indentedJSON, serializedConfiguration, "", "  ")
+  ioutil.WriteFile(filePath, indentedJSON.Bytes(), 0644)
 }
 
 func InitializeConfiguration() {
