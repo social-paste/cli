@@ -32,3 +32,8 @@ func RegisterUser(email string) (int, string) {
 	body := fmt.Sprintf(`{"email":"%s"}`, email)
 	return httpRequest("POST", "accounts/", body)
 }
+
+func UnregisterUser(email string) (int, string) {
+	body := fmt.Sprintf(`{"email":"%s"}`, email)
+	return httpRequest("DELETE", "accounts/delete/", body)
+}

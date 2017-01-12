@@ -3,9 +3,19 @@ package main
 import (
 	"fmt"
 )
+
 var cmdRegister = &Command{
 	Run:       runRegister,
 	UsageLine: "register ",
+	Short:     "",
+	Long: `
+
+	`,
+}
+
+var cmdUnregister = &Command{
+	Run:       runUnregister,
+	UsageLine: "unregister ",
 	Short:     "",
 	Long: `
 
@@ -23,6 +33,21 @@ func runRegister(args []string) int {
 
 	if statusCode == 201 {
 		fmt.Println("Usuário registrado com sucesso")
+		return 0
+	}
+
+	if string(body) != "" {
+		fmt.Println("Motivo: ", string(body))
+	}
+
+	return -1
+}
+
+func runUnregister(args []string) int {
+	statusCode, body := UnregisterUser(args[0])
+
+	if statusCode == 204 {
+		fmt.Println("Usuário removido com sucesso")
 		return 0
 	}
 
