@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os/user"
 	"encoding/json"
 	"io/ioutil"
   "bytes"
@@ -12,7 +13,8 @@ type Configuration struct {
   Slots map[int]string
 }
 
-var FilePath = "configuration.json"
+var usr, _ = user.Current()
+var FilePath = usr.HomeDir + "/.socialcp.conf"
 var configuration *Configuration;
 
 func loadConfiguration() {
@@ -103,4 +105,13 @@ func GetRecipient(slot int) (string) {
   }
 
   return configuration.Slots[slot]
+}
+
+func RemoveRecipient(slot int) {
+  if configuration == nil {
+    loadConfiguration()
+  }
+
+  delete(configuration.Slots, slot)
+  saveConfiguration()
 }

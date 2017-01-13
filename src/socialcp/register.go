@@ -32,6 +32,8 @@ func runRegister(args []string) int {
 	statusCode, body := RegisterUser(args[0])
 
 	if statusCode == 201 {
+
+		SetUser(args[0])
 		fmt.Println("Usuário registrado com sucesso")
 		return 0
 	}

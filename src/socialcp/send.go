@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"fmt"
 	b64  "encoding/base64"
 	clip "github.com/atotto/clipboard"
@@ -23,17 +24,20 @@ func init() {
 // runSend executes send command and return exit code.
 func runSend(args []string) int {
 
-    // TODO: validar o parametro
-    if( len(args) == 0 ) {
-    	fmt.Println("Comando mal formado: especifique o slot#")
-    	return -1
-    }
+	// TODO: validar o parametro
+	if( len(args) == 0 ) {
+		fmt.Println("Comando mal formado: especifique o slot#")
+		return -1
+	}
 
-	// TODO: ler o e-mail de origem (id do usuario)
-	origin := "daniela@qwerty.com"
+	slot, _ := strconv.Atoi(args[0])
+	origin := GetUser()
+	destination := GetRecipient(slot)
 
-	// TODO: traduzir o slot# para e-mail de destino
-	destination := "alguem@algumlugar.com"
+	if(recipt == "") {
+		fmt.Println("Slot vazio.")
+		return -1
+	}
 
 	// Carrega a mensagem do clipboard
 	message, err := clip.ReadAll()

@@ -23,7 +23,6 @@ func init() {
 // runConfig executes config command and return exit code.
 func runConfig(args []string) int {
 	editor := "vi"
-
 	path, error := exec.LookPath(editor)
 	if error != nil {
 		fmt.Println("Erro ao localizar o editor de texto " + editor + ".")
