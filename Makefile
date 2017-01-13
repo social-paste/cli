@@ -36,3 +36,5 @@ setup: dev-deps restore-vendors
 
 install:
 	@ln -s -f `pwd`/bin/socialcp /usr/local/bin/socialcp
+	@mv ./automator/socialcp-recv1.workflow ~/Library/Services/
+	@mv ./automator/socialcp-send1.workflow ~/Library/Services/
