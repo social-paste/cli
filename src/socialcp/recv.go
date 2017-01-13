@@ -56,7 +56,7 @@ func runRecv(args []string) int {
 	fmt.Println("Paste recebido com sucesso.")
 
 	fmt.Println(body)
-	
+
 	type Message struct {
 	    Origin, Destination, Content string
 	}
@@ -80,5 +80,5 @@ func runRecv(args []string) int {
 		panic(err)
 	}
 
-	return -1
+	return 0
 }
