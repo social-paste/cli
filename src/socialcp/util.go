@@ -115,3 +115,11 @@ func RemoveRecipient(slot int) {
   delete(configuration.Slots, slot)
   saveConfiguration()
 }
+
+func GetAllRecipients() (map[int]string) {
+	if configuration == nil {
+    loadConfiguration()
+  }
+
+	return configuration.Slots
+}
