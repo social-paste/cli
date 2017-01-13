@@ -23,8 +23,16 @@ re-test:
 dev-deps:
 	go get github.com/cespare/reflex
 	go get github.com/constabulary/gb/...
+	go get github.com/atotto/clipboard
 
 restore-vendors:
 	gb vendor restore
 
+ninja:
+	./bin/socialcp register eu@gmail.com
+	./bin/socialcp add 1 ninja@gmail.com
+
 setup: dev-deps restore-vendors
+
+install:
+	@ln -s -f `pwd`/bin/socialcp /usr/local/bin/socialcp
