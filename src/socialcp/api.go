@@ -40,9 +40,7 @@ func Send(origin string, destination string, content string) (int, string) {
 	return httpRequest("POST", "messages/", body)
 }
 
-// TODO: validar request
 func Recv(origin string, destination string) (int, string) {
-	body := fmt.Sprintf(`{"origin":"%s", "destination":"%s"}`, origin, destination)
-	fmt.Println(body)
-	return httpRequest("GET", "messages/", body)
+	endpoint := "messages/?origin=" + origin + "&destination=" + destination
+	return httpRequest("GET", endpoint, "")
 }

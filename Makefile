@@ -23,7 +23,6 @@ re-test:
 dev-deps:
 	go get github.com/cespare/reflex
 	go get github.com/constabulary/gb/...
-	go get github.com/atotto/clipboard
 
 restore-vendors:
 	gb vendor restore
