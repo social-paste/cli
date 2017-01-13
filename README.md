@@ -32,16 +32,16 @@ The diagram below shows the process of copying something on user A's computer an
                                       (one slot for each direction)
 local clipboard                    /--------------------------------\                      local clipboard
    (user A)                        | origin | destination | content |                         (user B)
- /-----------\   socialcp send #   |--------------------------------|   socialcp recv #    /-------------\
- |   hello   | ==================> | user A | user B      | hello   | ===================> |    hello    |
- \-----------/                     |--------------------------------|                      \-------------/
-      /\                           | user B | user A      | world   |                            ||
-      ||                           |--------------------------------|                            || paste (Cmd+V)
-      || copy (Cmd+C)              :                                :                            ||
-      ||                           :   slots for all other users    :                            \/
-                                   :                                :                  
-    hello                          |--------------------------------|                          hello
-                                   | user n | user m      | xpto    |
+ /-----------\   socialcp send #   |--------------------------------|   socialcp recv #   /-------------\
+ |   hello   | ==================> | user A | user B      | hello   | ==================> |    hello    |
+ \-----------/                     |--------------------------------|                     \-------------/
+      /\                           | user B | user A      | world   |                           ||
+      ||                           |--------------------------------|                           ||  paste
+      ||  copy                     :                                :                           || (Cmd+V)
+      || (Cmd+C)                   :   slots for all other users    :                           ||
+      ||                           :                                :                           \/
+                                   |--------------------------------|                           
+    hello                          | user n | user m      | xpto    |                         hello
                                    \--------------------------------/
 ```
 
