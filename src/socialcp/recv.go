@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	b64  "encoding/base64"
 	clip "github.com/atotto/clipboard"
 )
@@ -23,50 +24,48 @@ func init() {
 // runRecv executes recv command and return exit code.
 func runRecv(args []string) int {
 
-   // TODO: validar o parametro
-    if( len(args) == 0 ) {
-    	fmt.Println("Comando mal formado: especifique o slot#")
-    	return -1
-    }
+	// TODO: validar o parametro
+	if( len(args) == 0 ) {
+		fmt.Println("Comando mal formado: especifique o slot#")
+		return -1
+	}
 
-	// TODO: traduzir o slot# para e-mail de origem
-	origin := "alguem@algumlugar.com"
+	slot, _ := strconv.Atoi(args[0])
+	origin := GetUser()
+	destination := GetRecipient(slot)
 
-	// TODO: ler o e-mail de destino (id do usuario)
-	destination := "daniela@qwerty.com"
+	if(destination == "") {
+		fmt.Println("Slot vazio.")
+		return -1
+	}
 
-    // Lê o paste no servidor
-    statusCode, body := Recv(origin, destination)
+	// Lê o paste no servidor
+	statusCode, body := Recv(origin, destination)
+	fmt.Println(statusCode)
 
-    fmt.Println(statusCode)
-
-    // TODO: validar tratamento de erros
- 	if statusCode != 200 {
+	// TODO: validar tratamento de erros
+	if statusCode != 200 {
 		fmt.Println("Erro recebendo paste.")
-		if string(body) != "" {
+			if string(body) != "" {
 			fmt.Println("Motivo: ", string(body))
 		}
 		return -1
 	}
 
 	fmt.Println("Paste recebido com sucesso.")
+	// TODO: extrair mensagem do retorno do request
+	//       (decodificar o json)
+	fmt.Println(body)
+	msg64 := ""
 
-    // TODO: extrair mensagem do retorno do request
-    //       (decodificar o json)
-    fmt.Println(body)
-    msg64 := ""
+	// Decodifica mensagem de base64 para byte[]
+	message, _ := b64.StdEncoding.DecodeString(msg64)
+	message = []byte("abcd")
+	fmt.Println(message)
 
-    // Decodifica mensagem de base64 para byte[]
-    message, _ := b64.StdEncoding.DecodeString(msg64)
-
-    message = []byte("abcd")
-
-    fmt.Println(message)
-
-    // Copia mensagem para o clipboard
-    if err := clip.WriteAll(string(message)); err != nil {
+	// Copia mensagem para o clipboard
+	if err := clip.WriteAll(string(message)); err != nil {
 		panic(err)
 	}
-
 	return -1
 }

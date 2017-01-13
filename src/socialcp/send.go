@@ -34,7 +34,7 @@ func runSend(args []string) int {
 	origin := GetUser()
 	destination := GetRecipient(slot)
 
-	if(recipt == "") {
+	if(destination == "") {
 		fmt.Println("Slot vazio.")
 		return -1
 	}
@@ -44,12 +44,10 @@ func runSend(args []string) int {
 	if err != nil {
 		panic(err)
 	}
-
 	fmt.Println(message)
 
 	// Codifica para base64 para poder transferir caracteres especiais
 	msg64 := b64.StdEncoding.EncodeToString([]byte(message))
-
 	statusCode, body := Send(origin, destination, msg64)
 
 	if statusCode == 201 {
