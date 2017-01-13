@@ -28,19 +28,21 @@ The `send` command sends the content of your clipboard to the remote clipboard s
 
 The diagram below shows the process of copying something on user A's computer and pasting it on user B's computer:
 ```
-local clipboard                   remote clipboard (server)                                              local clipboard
-    (user A)                      (one slot for each user pair for each direction)                           (user B)
-/--------------\ socialcp send # /---------------------------------------------------\ socialcp recv #  /----------------\
-| content: C   | ==============> | origin: user A | destination: user B | content: C | ===============> | content: C     |
-\--------------/                 |---------------------------------------------------|                  \----------------/
-      /\                         | origin: user B | destination: user A | content: D |                          ||
-      ||                         |---------------------------------------------------|                          ||
-      ||                         :                                                   :                          ||
-      ||                         :            slots for all other users              :                          \/
- copy text (Cmd+C)               :                                                   :                  paste text (Cmd+V)
-                                 |---------------------------------------------------|
-                                 | origin: user n | destination: user m | content: x |
-                                 \---------------------------------------------------/
+                                        remote clipboard (server)
+                                      (one slot for each direction)
+local clipboard                    /--------------------------------\                      local clipboard
+   (user A)                        | origin | destination | content |                         (user B)
+ /-----------\   socialcp send #   |--------------------------------|   socialcp recv #    /-------------\
+ |   hello   | ==================> | user A | user B      | hello   | ===================> |    hello    |
+ \-----------/                     |--------------------------------|                      \-------------/
+      /\                           | user B | user A      | world   |                            ||
+      ||                           |--------------------------------|                            || paste (Cmd+V)
+      || copy (Cmd+C)              :                                :                            ||
+      ||                           :   slots for all other users    :                            \/
+                                   :                                :                  
+    hello                          |--------------------------------|                          hello
+                                   | user n | user m      | xpto    |
+                                   \--------------------------------/
 ```
 
 Basically, in order to send a _copy_ of something to your friend you must first copy it yourself with the usual copy hotkey (Cmd+C for OSX or Ctrl+C for Linux/Windows) and then issue a `send` command passing as a parameter the slot number for a previously configured user, i.e., `socialcp send 1`. This command can be issued at the command line but ideally one would associate it with a hotkey to run the command line itself.
@@ -49,22 +51,12 @@ The process to receive a _paste_ works similarly, but you must first run a `recv
 
 # Examples
 
-1. Register your user. I.e.:
-    
-`socialcp register me@somewhere.com`
+1. Register your user: `socialcp register me@somewhere.com`
     
-2. Configure your friends:
+2. Configure your friends: `socialcp add 1 myfriend@anywhere.com`  
 
-`socialcp add 1 myfriend@anywhere.com`
-    
 3. Map the shortcuts (SO dependant)
+  - Command line to send to remote clipboard: `socialcp send 1`  
+  - Command line to receive from remote clipboard: `socialcp recv 1` 
 
-- Command line to send to remote clipboard
-
-`socialcp send 1`
-    
-- Command line to receive from remote clipboard
-
-`socialcp recv 1`
-    
 4. Enjoy :)
