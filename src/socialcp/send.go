@@ -59,5 +59,5 @@ func runSend(args []string) int {
 		fmt.Println("Motivo: ", string(body))
 	}
 
-	return -1
+	return 0
 }
